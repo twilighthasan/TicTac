@@ -1,32 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Мой блог</title>
+    <meta charset="UTF-8">
+    <title>3D Rotating Cube</title>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/build/three.min.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; margin:0 auto; max-width: 50em; padding:1em; }
-        h1 { text-align: center; }
-        #content { margin: 1em 0; }
+        body { margin: 0; }
+        #threejs-container { width: 100vw; height: 100vh; display: block; }
     </style>
 </head>
 <body>
-    <h1>Мой блог</h1>
-    <div id="content"></div>
-    <textarea id="input"></textarea>
-    <button onclick="newPost()">Новый пост</button>
-
+    <div id="threejs-container"></div>
     <script>
-        function newPost() {
-            var input = document.getElementById("input").value;
-            var content = document.getElementById("content");
-            content.innerHTML = '<h2>' + input + '</h2>' + content.innerHTML;
-            document.getElementById("input").value = "";
-            localStorage.setItem('blog', content.innerHTML);
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('threejs-container').appendChild(renderer.domElement);
+
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        camera.position.z = 5;
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+
+            renderer.render(scene, camera);
         }
 
-        window.onload = function() {
-            var content = document.getElementById("content");
-            content.innerHTML = localStorage.getItem('blog');
-        }
+        animate();
+        
+        // Обрабатываем изменение размера окна
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
     </script>
 </body>
 </html>
