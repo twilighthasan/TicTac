@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>3D Rotating Cube</title>
+    <title>3D Cube Following Mouse</title>
     <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/build/three.min.js"></script>
     <style>
         body { margin: 0; }
@@ -14,35 +14,53 @@
     <script>
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('threejs-container').appendChild(renderer.domElement);
 
         const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
         const cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
 
         camera.position.z = 5;
 
+        let mouseX = 0, mouseY = 0;
+        let targetX = 0, targetY = 0;
+        let isMouseOver = true;
+
+        function onMouseMove(event) {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            isMouseOver = true;
+        }
+
+        function onMouseLeave() {
+            isMouseOver = false;
+        }
+
         function animate() {
             requestAnimationFrame(animate);
 
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
+            if (isMouseOver) {
+                targetX = mouseX * 5;
+                targetY = mouseY * 5;
+            } else {
+                targetX += (Math.random() - 0.5) * 0.5;
+                targetY += (Math.random() - 0.5) * 0.5;
+            }
+
+            cube.position.x += (targetX - cube.position.x) * 0.1;
+            cube.position.y += (targetY - cube.position.y) * 0.1;
 
             renderer.render(scene, camera);
         }
 
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseleave', onMouseLeave);
+
         animate();
-        
-        // Обрабатываем изменение размера окна
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
     </script>
 </body>
 </html>
