@@ -2,12 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Interactive 3D Cube</title>
+    <title>3D Cube Test</title>
     <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/build/three.min.js"></script>
-    <style>
-        body { margin: 0; }
-        #threejs-container { width: 100vw; height: 100vh; display: block; }
-    </style>
 </head>
 <body>
     <div id="threejs-container"></div>
@@ -16,50 +12,21 @@
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        document.getElementById('threejs-container').appendChild(renderer.domElement);
+        document.body.appendChild(renderer.domElement);
 
-        // Создание текстуры с текстом "Бро"
-        const loader = new THREE.TextureLoader();
-        const texture = loader.load('https://via.placeholder.com/256x256.png?text=Бро'); // Замените URL на реальный путь к изображению с текстом "Бро"
         const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true, opacity: 0.5 });
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, transparent: true, opacity: 0.5 });
         const cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
 
         camera.position.z = 5;
 
-        let mouseX = 0, mouseY = 0;
-        let isMouseOver = false;
-
-        function onMouseMove(event) {
-            const rect = renderer.domElement.getBoundingClientRect();
-            mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-            mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-            isMouseOver = true;
-        }
-
-        function onMouseLeave() {
-            isMouseOver = false;
-        }
-
         function animate() {
             requestAnimationFrame(animate);
-
-            // Вращение куба
             cube.rotation.x += 0.01;
             cube.rotation.y += 0.01;
-
-            if (isMouseOver) {
-                // Приближение куба к курсору
-                camera.position.x += (mouseX * 5 - camera.position.x) * 0.1;
-                camera.position.y += (mouseY * 5 - camera.position.y) * 0.1;
-            }
-
             renderer.render(scene, camera);
         }
-
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseleave', onMouseLeave);
 
         animate();
     </script>
