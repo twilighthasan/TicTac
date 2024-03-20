@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Крестики-нолики</title>
+    <style>
+        #game {
+            display: grid;
+            grid-template-rows: repeat(3, 100px);
+            grid-template-columns: repeat(3, 100px);
+        }
+        .cell {
+            border: 1px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="game">
+        <div class="cell" onclick="makeMove(0, 0)"></div>
+        <div class="cell" onclick="makeMove(0, 1)"></div>
+        <div class="cell" onclick="makeMove(0, 2)"></div>
+        <div class="cell" onclick="makeMove(1, 0)"></div>
+        <div class="cell" onclick="makeMove(1, 1)"></div>
+        <div class="cell" onclick="makeMove(1, 2)"></div>
+        <div class="cell" onclick="makeMove(2, 0)"></div>
+        <div class="cell" onclick="makeMove(2, 1)"></div>
+        <div class="cell" onclick="makeMove(2, 2)"></div>
+    </div>
+
+    <script>
+        const board = [
+            ['', '', ''],
+            ['', '', ''],
+            ['', '', '']
+        ];
+        let currentPlayer = 'X';
+
+        function makeMove(row, col) {
+            if (board[row][col] === '') {
+                board[row][col] = currentPlayer;
+                const cell = document.querySelectorAll('#game .cell')[row * 3 + col];
+                cell.textContent = currentPlayer;
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            }
+        }
+    </script>
+</body>
+</html>
