@@ -1,34 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>3D Cube Test</title>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/build/three.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  canvas { background-color: #000; display: block; margin: 0 auto; }
+  .ball { border-radius: 50%; }
+</style>
 </head>
 <body>
-    <div id="threejs-container"></div>
-    <script>
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+<canvas id="canvas"></canvas>
+<script>
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
+  var balls = [
+    { x: 50, y: 50, radius: 20, color: 'red' },
+    { x: 150, y: 50, radius: 20, color: 'green' },
+    { x: 250, y: 50, radius: 20, color: 'blue' }
+  ];
 
-        const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, transparent: true, opacity: 0.5 });
-        const cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
+  function drawBall(ball) {
+    ctx.beginPath();
+    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+    ctx.fillStyle = ball.color;
+    ctx.fill();
+    ctx.closePath();
+  }
 
-        camera.position.z = 5;
+  function updateBalls() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    balls.forEach(drawBall);
+  }
 
-        function animate() {
-            requestAnimationFrame(animate);
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
-            renderer.render(scene, camera);
-        }
+  function init() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    updateBalls();
+    window.addEventListener('deviceorientation', function(event) {
+      var x = event.gamma; // In degree in the range [-90,90]
+      var y = event.beta;  // In degree in the range [-180,180]
+      balls.forEach(function(ball) {
+        ball.x += x * 0.1;
+        ball.y += y * 0.1;
+      });
+      updateBalls();
+    });
+  }
 
-        animate();
-    </script>
+  window.addEventListener('resize', function() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    updateBalls();
+  });
+
+  init();
+</script>
 </body>
 </html>
