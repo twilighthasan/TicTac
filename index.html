@@ -1,51 +1,88 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-  body { margin: 0; }
-  #cube-container { width: 100vw; height: 100vh; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Glass Cubes</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #container {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
+    </style>
 </head>
 <body>
-<div id="cube-container"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-  var scene = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  var renderer = new THREE.WebGLRenderer();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.getElementById('cube-container').appendChild(renderer.domElement);
+    <div id="container"></div>
+    <script src="https://threejs.org/build/three.js"></script>
+    <script>
+        const container = document.getElementById('container');
+        const width = window.innerWidth;
+        const height = window.innerHeight;
 
-  var cubes = [];
-  var colors = ['red', 'green', 'blue', 'yellow'];
-  for (var i = 0; i < 4; i++) {
-    var geometry = new THREE.BoxGeometry();
-    var material = new THREE.MeshBasicMaterial({ color: colors[i] });
-    var cube = new THREE.Mesh(geometry, material);
-    cube.position.x = (i - 1.5) * 2;
-    scene.add(cube);
-    cubes.push(cube);
-  }
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer.setSize(width, height);
+        container.appendChild(renderer.domElement);
 
-  camera.position.z = 5;
+        const light = new THREE.PointLight(0xffffff, 1, 500);
+        light.position.set(10, 10, 10);
+        scene.add(light);
 
-  var animate = function () {
-    requestAnimationFrame(animate);
+        const cubes = [];
+        for (let i = 0; i < 4; i++) {
+            const geometry = new THREE.BoxGeometry();
+            const material = new THREE.MeshPhongMaterial({
+                color: new THREE.Color().setHSL(Math.random(), 1, 0.5),
+                transparent: true,
+                opacity: 0.8,
+                reflectivity: 0.8
+            });
+            const cube = new THREE.Mesh(geometry, material);
+            cube.position.set((Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10);
+            cube.velocity = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
+            scene.add(cube);
+            cubes.push(cube);
+        }
 
-    cubes.forEach(function(cube, index) {
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
+        camera.position.z = 15;
 
-      // Change color over time
-      cube.material.color.setHSL((performance.now() / 1000 + index) % 1, 1, 0.5);
-    });
+        function animate() {
+            requestAnimationFrame(animate);
 
-    renderer.render(scene, camera);
-  };
+            cubes.forEach(cube => {
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
 
-  animate();
-</script>
+                cube.position.add(cube.velocity);
+                
+                ['x', 'y', 'z'].forEach((axis) => {
+                    if (Math.abs(cube.position[axis]) > 5) {
+                        cube.velocity[axis] *= -1;
+                    }
+                });
+
+                cube.material.color.setHSL((Math.sin(Date.now() * 0.001) + 1) / 2, 1, 0.5);
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', onWindowResize, false);
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+    </script>
 </body>
 </html>
