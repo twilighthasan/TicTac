@@ -1,88 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Glass Cubes</title>
+    <title>Animated Text</title>
     <style>
-        body, html {
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 0;
+            background-color: #f0f0f0;
             overflow: hidden;
         }
+
         #container {
-            width: 100vw;
-            height: 100vh;
-            display: block;
+            font-family: 'Arial', sans-serif;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        #word {
+            display: inline-block;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div id="container"></div>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.125.2/build/three.min.js"></script>
+    <div id="container">
+        <div id="word">Хасан</div>
+    </div>
     <script>
-        const container = document.getElementById('container');
-        const width = window.innerWidth;
-        const height = window.innerHeight;
+        const word = document.getElementById('word');
+        const letters = [...word.textContent].map(letter => {
+            const span = document.createElement('span');
+            span.textContent = letter;
+            word.appendChild(span);
+            return span;
+        });
 
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({antialias: true});
-        renderer.setSize(width, height);
-        container.appendChild(renderer.domElement);
+        word.textContent = '';
 
-        const light = new THREE.PointLight(0xffffff, 1, 500);
-        light.position.set(10, 10, 10);
-        scene.add(light);
+        letters.forEach(letter => {
+            letter.style.position = 'absolute';
+            letter.style.left = Math.random() * window.innerWidth + 'px';
+            letter.style.top = Math.random() * window.innerHeight + 'px';
+        });
 
-        const cubes = [];
-        for (let i = 0; i < 4; i++) {
-            const geometry = new THREE.BoxGeometry();
-            const material = new THREE.MeshPhongMaterial({
-                color: new THREE.Color().setHSL(Math.random(), 1, 0.5),
-                transparent: true,
-                opacity: 0.8,
-                reflectivity: 0.8
+        setTimeout(() => {
+            letters.forEach((letter, index) => {
+                letter.style.transition = 'all 1s ease';
+                letter.style.left = word.offsetLeft + index * letter.clientWidth + 'px';
+                letter.style.top = word.offsetTop + 'px';
             });
-            const cube = new THREE.Mesh(geometry, material);
-            cube.position.set((Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10);
-            cube.velocity = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
-            scene.add(cube);
-            cubes.push(cube);
-        }
-
-        camera.position.z = 15;
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            cubes.forEach(cube => {
-                cube.rotation.x += 0.01;
-                cube.rotation.y += 0.01;
-
-                cube.position.add(cube.velocity);
-                
-                ['x', 'y', 'z'].forEach((axis) => {
-                    if (Math.abs(cube.position[axis]) > 5) {
-                        cube.velocity[axis] *= -1;
-                    }
-                });
-
-                cube.material.color.setHSL((Math.sin(Date.now() * 0.001) + 1) / 2, 1, 0.5);
-            });
-
-            renderer.render(scene, camera);
-        }
-
-        animate();
-
-        window.addEventListener('resize', onWindowResize, false);
-
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }
+        }, 5000);
     </script>
 </body>
 </html>
