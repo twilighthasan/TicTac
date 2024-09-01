@@ -1,96 +1,148 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Крестики-нолики</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapalı Çarşı Döviz Kurları</title>
     <style>
-        .board {
-            display: grid;
-            grid-template-columns: repeat(3, 100px);
-            grid-template-rows: repeat(3, 100px);
-            gap: 5px;
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1a2d38;
+            color: white;
         }
-        .cell {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f0f0f0;
-            font-size: 2em;
-            cursor: pointer;
+        .container {
+            padding: 20px;
         }
-        .cell.x { color: red; }
-        .cell.o { color: blue; }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        .header p {
+            font-size: 14px;
+            color: #a0b3c6;
+        }
+        .currency-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .currency-table th, .currency-table td {
+            padding: 10px;
+            text-align: left;
+        }
+        .currency-table th {
+            background-color: #223b50;
+            font-weight: normal;
+            color: #a0b3c6;
+        }
+        .currency-table td {
+            border-bottom: 1px solid #223b50;
+        }
+        .currency-table .highlight {
+            color: #00ff00;
+        }
+        .currency-table .no-change {
+            color: #a0b3c6;
+        }
     </style>
+    <script>
+        function updateTime() {
+            const options = { timeZone: 'Europe/Istanbul', hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' };
+            const formatter = new Intl.DateTimeFormat('tr-TR', options);
+            document.getElementById('time').innerText = formatter.format(new Date());
+        }
+        
+        function updateRates() {
+            // Увеличенные значения курсов
+            document.getElementById('usd_buy').innerText = '35.9400';
+            document.getElementById('usd_sell').innerText = '36.0250';
+            document.getElementById('eur_buy').innerText = '39.3780';
+            document.getElementById('eur_sell').innerText = '39.5700';
+        }
+
+        setInterval(updateTime, 1000);
+        window.onload = function() {
+            updateTime();
+            updateRates();
+        };
+    </script>
 </head>
 <body>
-    <div id="board" class="board">
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
+    <div class="container">
+        <div class="header">
+            <h1>KAPALI ÇARŞI DÖVIZ KURLARI</h1>
+            <p>PİYASA: AÇIK · <span id="time"></span></p>
+        </div>
+        <table class="currency-table">
+            <tr>
+                <th>DÖVİZ ADI</th>
+                <th>ALIŞ FİYATI</th>
+                <th>SATIŞ FİYATI</th>
+            </tr>
+            <tr>
+                <td>USD<br>DOLAR</td>
+                <td id="usd_buy">35.9400</td>
+                <td id="usd_sell">36.0250</td>
+            </tr>
+            <tr>
+                <td>EUR<br>EURO</td>
+                <td id="eur_buy">39.3780</td>
+                <td id="eur_sell">39.5700</td>
+            </tr>
+            <tr>
+                <td>GBP<br>İNGİLİZ STERLİNİ</td>
+                <td>44.1530</td>
+                <td>44.5590</td>
+            </tr>
+            <tr>
+                <td>CHF<br>İSVİÇRE FRANGI</td>
+                <td>39.2320</td>
+                <td>39.9450</td>
+            </tr>
+            <tr>
+                <td>CAD<br>KANADA DOLARI</td>
+                <td>24.6940</td>
+                <td>25.4350</td>
+            </tr>
+            <tr>
+                <td>RUB<br>RUS RUBLESI</td>
+                <td>0.2690</td>
+                <td>0.3580</td>
+            </tr>
+            <tr>
+                <td>AED<br>B.A.E. DİRHEMİ</td>
+                <td>9.1494</td>
+                <td class="highlight">9.2494</td>
+            </tr>
+            <tr>
+                <td>AUD<br>AVUSTRALYA DOLARI</td>
+                <td>22.2780</td>
+                <td>22.9570</td>
+            </tr>
+            <tr>
+                <td>DKK<br>DANIMARKA KRONU</td>
+                <td>1.0410</td>
+                <td>4.9310</td>
+            </tr>
+            <tr>
+                <td>SEK<br>İSVEÇ KRONU</td>
+                <td>2.8290</td>
+                <td>2.8490</td>
+            </tr>
+            <tr>
+                <td>NOK<br>NORVEÇ KRONU</td>
+                <td>2.7550</td>
+                <td>2.7650</td>
+            </tr>
+        </table>
+        <div class="footer">
+            <p style="text-align: center; color: #a0b3c6;">canlidoviz.com</p>
+        </div>
     </div>
-
-    <script>
-        const board = document.getElementById('board');
-        const cells = document.querySelectorAll('[data-cell]');
-        let currentPlayer = 'x';
-
-        cells.forEach(cell => {
-            cell.addEventListener('click', handleClick, { once: true });
-        });
-
-        function handleClick(e) {
-            const cell = e.target;
-            cell.classList.add(currentPlayer);
-            if (checkWin(currentPlayer)) {
-                alert(`${currentPlayer.toUpperCase()} победил!`);
-                restartGame();
-            } else if (isDraw()) {
-                alert('Ничья!');
-                restartGame();
-            } else {
-                currentPlayer = currentPlayer === 'x' ? 'o' : 'x';
-            }
-        }
-
-        function checkWin(player) {
-            const winConditions = [
-                [0, 1, 2],
-                [3, 4, 5],
-                [6, 7, 8],
-                [0, 3, 6],
-                [1, 4, 7],
-                [2, 5, 8],
-                [0, 4, 8],
-                [2, 4, 6]
-            ];
-
-            return winConditions.some(condition => {
-                return condition.every(index => {
-                    return cells[index].classList.contains(player);
-                });
-            });
-        }
-
-        function isDraw() {
-            return [...cells].every(cell => {
-                return cell.classList.contains('x') || cell.classList.contains('o');
-            });
-        }
-
-        function restartGame() {
-            cells.forEach(cell => {
-                cell.classList.remove('x', 'o');
-                cell.removeEventListener('click', handleClick);
-                cell.addEventListener('click', handleClick, { once: true });
-            });
-            currentPlayer = 'x';
-        }
-    </script>
 </body>
 </html>
