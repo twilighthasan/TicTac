@@ -3,157 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kapalı Çarşı Döviz Kurları</title>
+    <title>Курсы валют</title>
     <style>
         body {
+            font-family: Arial, sans-serif;
+            background-color: #202B38;
+            color: #fff;
+            text-align: center;
             margin: 0;
             padding: 0;
-            font-family: "Helvetica Neue", Arial, sans-serif;
-            background-color: #1a2c3b;
-            color: #fff;
         }
         .container {
+            max-width: 600px;
+            margin: 50px auto;
             padding: 20px;
-            font-size: 16px;
+            background-color: #293947;
+            border-radius: 8px;
         }
-        .header {
-            font-size: 20px;
-            text-align: center;
-            margin-bottom: 10px;
-            font-weight: bold;
+        h1 {
+            margin-bottom: 20px;
         }
-        .sub-header {
-            color: #72b768;
-            text-align: center;
-            margin-bottom: 15px;
+        .rate {
+            margin: 10px 0;
+            font-size: 1.5em;
         }
-        .sub-header span {
-            color: #8fa6b2;
-        }
-        .exchange-table {
-            width: 100%;
-            border-spacing: 0 10px;
-            margin-bottom: 10px;
-        }
-        .exchange-table th, .exchange-table td {
-            padding: 10px;
+        .currency {
+            display: inline-block;
+            width: 100px;
             text-align: left;
         }
-        .exchange-table th {
-            font-size: 14px;
-            color: #4cc3c9;
-        }
-        .exchange-table td {
-            font-size: 14px;
-            color: #ffffff;
-        }
-        .rate-buy {
-            font-weight: bold;
-            color: #4cc3c9;
-        }
-        .rate-sell {
-            font-weight: bold;
-        }
-        .highlight {
-            color: #50c878;
-        }
-        .small-text {
-            font-size: 10px;
-            color: #8fa6b2;
+        .value {
+            display: inline-block;
+            width: 100px;
+            text-align: right;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">KAPALI ÇARŞI DÖVİZ KURLARI</div>
-        <div class="sub-header">
-            PİYASA: AÇIK <span>• 02/09/2024 •</span> <span id="current-time"></span>
+        <h1>Курсы валют</h1>
+        <div class="rate">
+            <span class="currency">USD/TRY</span>
+            <span class="value" id="usd-rate">Загрузка...</span>
         </div>
-        <table class="exchange-table">
-            <thead>
-                <tr>
-                    <th>DÖVİZ ADI</th>
-                    <th>ALIŞ FİYATI</th>
-                    <th>SATIŞ FİYATI</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>USD<br><span class="small-text">DOLAR • 03:00:03</span></td>
-                    <td id="usd-buy" class="rate-buy">35.9400</td>
-                    <td id="usd-sell" class="rate-sell">36.0250</td>
-                </tr>
-                <tr>
-                    <td>EUR<br><span class="small-text">EURO • 03:00:03</span></td>
-                    <td id="eur-buy" class="rate-buy">39.3780</td>
-                    <td id="eur-sell" class="rate-sell">39.5700</td>
-                </tr>
-                <tr>
-                    <td>GBP<br><span class="small-text">İNGİLİZ STERLİNİ • 03:00:03</span></td>
-                    <td class="rate-buy">44.1530</td>
-                    <td class="rate-sell">44.5590</td>
-                </tr>
-                <tr>
-                    <td>CHF<br><span class="small-text">İSVİÇRE FRANGI • 03:00:03</span></td>
-                    <td class="rate-buy">39.2320</td>
-                    <td class="rate-sell">39.9450</td>
-                </tr>
-                <tr>
-                    <td>CAD<br><span class="small-text">KANADA DOLARI • 03:00:03</span></td>
-                    <td class="rate-buy">24.6940</td>
-                    <td class="rate-sell">25.4350</td>
-                </tr>
-                <tr>
-                    <td>RUB<br><span class="small-text">RUS RUBLESİ • 01/09/24</span></td>
-                    <td class="rate-buy">0.2690</td>
-                    <td class="rate-sell">0.3580</td>
-                </tr>
-                <tr>
-                    <td>AED<br><span class="small-text">B.A.E. DİRHEMİ • 01/09/24</span></td>
-                    <td class="rate-buy">9.1494</td>
-                    <td class="rate-sell highlight">9.2494</td>
-                </tr>
-                <tr>
-                    <td>AUD<br><span class="small-text">AVUSTRALYA DOLARI • 03:00:03</span></td>
-                    <td class="rate-buy">22.2780</td>
-                    <td class="rate-sell">22.9570</td>
-                </tr>
-                <tr>
-                    <td>DKK<br><span class="small-text">DANİMARKA KRONU • 03:00:03</span></td>
-                    <td class="rate-buy">1.0410</td>
-                    <td class="rate-sell">4.9310</td>
-                </tr>
-                <tr>
-                    <td>SEK<br><span class="small-text">İSVEÇ KRONU • 03:00:03</span></td>
-                    <td class="rate-buy">2.8490</td>
-                    <td class="rate-sell">2.8490</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="rate">
+            <span class="currency">EUR/TRY</span>
+            <span class="value" id="eur-rate">Загрузка...</span>
+        </div>
+        <!-- Вы можете добавить больше валют здесь -->
     </div>
+
     <script>
-        function updateTime() {
-            const now = new Date();
-            document.getElementById('current-time').textContent = now.toLocaleTimeString();
+        const apiKey = 'ВАШ_API_КЛЮЧ'; // Замените на ваш API ключ
+        const apiUrl = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/TRY`;
+
+        async function fetchRates() {
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                // Обновляем курсы на сайте
+                const usdRate = (1 / data.conversion_rates.USD + 2).toFixed(4);
+                const eurRate = (1 / data.conversion_rates.EUR + 2).toFixed(4);
+                
+                document.getElementById('usd-rate').textContent = usdRate;
+                document.getElementById('eur-rate').textContent = eurRate;
+            } catch (error) {
+                console.error('Ошибка получения курсов валют:', error);
+            }
         }
 
-        // Обновляем время каждую секунду
-        setInterval(updateTime, 1000);
+        // Обновляем курсы сразу после загрузки страницы
+        fetchRates();
 
-        // Инициализация времени при загрузке
-        updateTime();
-
-        // Настроенные курсы для доллара и евро
-        const usdBuyRate = 33.9400 + 2.0000;
-        const usdSellRate = 34.0250 + 2.0000;
-        const eurBuyRate = 37.3780 + 2.0000;
-        const eurSellRate = 37.5700 + 2.0000;
-
-        // Устанавливаем курсы в таблице
-        document.getElementById('usd-buy').textContent = usdBuyRate.toFixed(4);
-        document.getElementById('usd-sell').textContent = usdSellRate.toFixed(4);
-        document.getElementById('eur-buy').textContent = eurBuyRate.toFixed(4);
-        document.getElementById('eur-sell').textContent = eurSellRate.toFixed(4);
+        // Автоматическое обновление каждые 10 минут (600000 миллисекунд)
+        setInterval(fetchRates, 600000);
     </script>
 </body>
 </html>
