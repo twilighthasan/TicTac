@@ -44,10 +44,22 @@
             border-bottom: 1px solid #223b50;
         }
         .currency-table .highlight {
-            color: #00ff00;
+            color: #00ff00; /* Зеленый цвет для активного курса */
         }
         .currency-table .no-change {
-            color: #a0b3c6;
+            color: #a0b3c6; /* Серый цвет для отсутствия изменений */
+        }
+        .currency-table .currency-code {
+            color: #ffffff; /* Белый цвет для кода валюты */
+        }
+        .currency-table .currency-name {
+            color: #a0b3c6; /* Серый цвет для названия валюты */
+        }
+        .currency-table .buy-price {
+            color: #a0b3c6; /* Серый цвет для цены покупки */
+        }
+        .currency-table .sell-price {
+            color: #ffffff; /* Белый цвет для цены продажи */
         }
     </style>
     <script>
@@ -85,59 +97,59 @@
                 <th>SATIŞ FİYATI</th>
             </tr>
             <tr>
-                <td>USD<br>DOLAR</td>
-                <td id="usd_buy">35.9400</td>
-                <td id="usd_sell">36.0250</td>
+                <td class="currency-code">USD<br><span class="currency-name">DOLAR</span></td>
+                <td class="buy-price" id="usd_buy">35.9400</td>
+                <td class="sell-price" id="usd_sell">36.0250</td>
             </tr>
             <tr>
-                <td>EUR<br>EURO</td>
-                <td id="eur_buy">39.3780</td>
-                <td id="eur_sell">39.5700</td>
+                <td class="currency-code">EUR<br><span class="currency-name">EURO</span></td>
+                <td class="buy-price" id="eur_buy">39.3780</td>
+                <td class="sell-price" id="eur_sell">39.5700</td>
             </tr>
             <tr>
-                <td>GBP<br>İNGİLİZ STERLİNİ</td>
-                <td>44.1530</td>
-                <td>44.5590</td>
+                <td class="currency-code">GBP<br><span class="currency-name">İNGİLİZ STERLİNİ</span></td>
+                <td class="buy-price">44.1530</td>
+                <td class="sell-price">44.5590</td>
             </tr>
             <tr>
-                <td>CHF<br>İSVİÇRE FRANGI</td>
-                <td>39.2320</td>
-                <td>39.9450</td>
+                <td class="currency-code">CHF<br><span class="currency-name">İSVİÇRE FRANGI</span></td>
+                <td class="buy-price">39.2320</td>
+                <td class="sell-price">39.9450</td>
             </tr>
             <tr>
-                <td>CAD<br>KANADA DOLARI</td>
-                <td>24.6940</td>
-                <td>25.4350</td>
+                <td class="currency-code">CAD<br><span class="currency-name">KANADA DOLARI</span></td>
+                <td class="buy-price">24.6940</td>
+                <td class="sell-price">25.4350</td>
             </tr>
             <tr>
-                <td>RUB<br>RUS RUBLESI</td>
-                <td>0.2690</td>
-                <td>0.3580</td>
+                <td class="currency-code">RUB<br><span class="currency-name">RUS RUBLESI</span></td>
+                <td class="buy-price">0.2690</td>
+                <td class="sell-price">0.3580</td>
             </tr>
             <tr>
-                <td>AED<br>B.A.E. DİRHEMİ</td>
-                <td>9.1494</td>
-                <td class="highlight">9.2494</td>
+                <td class="currency-code">AED<br><span class="currency-name">B.A.E. DİRHEMİ</span></td>
+                <td class="buy-price">9.1494</td>
+                <td class="sell-price highlight">9.2494</td>
             </tr>
             <tr>
-                <td>AUD<br>AVUSTRALYA DOLARI</td>
-                <td>22.2780</td>
-                <td>22.9570</td>
+                <td class="currency-code">AUD<br><span class="currency-name">AVUSTRALYA DOLARI</span></td>
+                <td class="buy-price">22.2780</td>
+                <td class="sell-price">22.9570</td>
             </tr>
             <tr>
-                <td>DKK<br>DANIMARKA KRONU</td>
-                <td>1.0410</td>
-                <td>4.9310</td>
+                <td class="currency-code">DKK<br><span class="currency-name">DANIMARKA KRONU</span></td>
+                <td class="buy-price">1.0410</td>
+                <td class="sell-price">4.9310</td>
             </tr>
             <tr>
-                <td>SEK<br>İSVEÇ KRONU</td>
-                <td>2.8290</td>
-                <td>2.8490</td>
+                <td class="currency-code">SEK<br><span class="currency-name">İSVEÇ KRONU</span></td>
+                <td class="buy-price">2.8290</td>
+                <td class="sell-price">2.8490</td>
             </tr>
             <tr>
-                <td>NOK<br>NORVEÇ KRONU</td>
-                <td>2.7550</td>
-                <td>2.7650</td>
+                <td class="currency-code">NOK<br><span class="currency-name">NORVEÇ KRONU</span></td>
+                <td class="buy-price">2.7550</td>
+                <td class="sell-price">2.7650</td>
             </tr>
         </table>
         <div class="footer">
