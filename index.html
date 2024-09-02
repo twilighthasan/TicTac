@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,153 +8,152 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #1a2d38;
-            color: white;
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            background-color: #1a2c3b;
+            color: #fff;
         }
         .container {
             padding: 20px;
+            font-size: 16px;
         }
         .header {
+            font-size: 20px;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
         }
-        .header h1 {
-            font-size: 24px;
-            margin: 0;
+        .sub-header {
+            color: #72b768;
+            text-align: center;
+            margin-bottom: 15px;
         }
-        .header p {
-            font-size: 14px;
-            color: #a0b3c6;
+        .sub-header span {
+            color: #8fa6b2;
         }
-        .currency-table {
+        .exchange-table {
             width: 100%;
-            border-collapse: collapse;
+            border-spacing: 0 10px;
+            margin-bottom: 10px;
         }
-        .currency-table th, .currency-table td {
+        .exchange-table th, .exchange-table td {
             padding: 10px;
             text-align: left;
         }
-        .currency-table th {
-            background-color: #223b50;
-            font-weight: normal;
-            color: #a0b3c6;
+        .exchange-table th {
+            font-size: 14px;
+            color: #4cc3c9;
         }
-        .currency-table td {
-            border-bottom: 1px solid #223b50;
+        .exchange-table td {
+            font-size: 14px;
+            color: #ffffff;
         }
-        .currency-table .highlight {
-            color: #00ff00; /* Зеленый цвет для активного курса */
+        .rate-buy {
+            font-weight: bold;
+            color: #4cc3c9;
         }
-        .currency-table .no-change {
-            color: #a0b3c6; /* Серый цвет для отсутствия изменений */
+        .rate-sell {
+            font-weight: bold;
         }
-        .currency-table .currency-code {
-            color: #ffffff; /* Белый цвет для кода валюты */
+        .highlight {
+            color: #50c878;
         }
-        .currency-table .currency-name {
-            color: #a0b3c6; /* Серый цвет для названия валюты */
-        }
-        .currency-table .buy-price {
-            color: #a0b3c6; /* Серый цвет для цены покупки */
-        }
-        .currency-table .sell-price {
-            color: #ffffff; /* Белый цвет для цены продажи */
+        .small-text {
+            font-size: 10px;
+            color: #8fa6b2;
         }
     </style>
-    <script>
-        function updateTime() {
-            const options = { timeZone: 'Europe/Istanbul', hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' };
-            const formatter = new Intl.DateTimeFormat('tr-TR', options);
-            document.getElementById('time').innerText = formatter.format(new Date());
-        }
-        
-        function updateRates() {
-            // Увеличенные значения курсов
-            document.getElementById('usd_buy').innerText = '35.9400';
-            document.getElementById('usd_sell').innerText = '36.0250';
-            document.getElementById('eur_buy').innerText = '39.3780';
-            document.getElementById('eur_sell').innerText = '39.5700';
-        }
-
-        setInterval(updateTime, 1000);
-        window.onload = function() {
-            updateTime();
-            updateRates();
-        };
-    </script>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>KAPALI ÇARŞI DÖVIZ KURLARI</h1>
-            <p>PİYASA: AÇIK · <span id="time"></span></p>
+        <div class="header">KAPALI ÇARŞI DÖVİZ KURLARI</div>
+        <div class="sub-header">
+            PİYASA: AÇIK <span>• 02/09/2024 •</span> <span id="current-time"></span>
         </div>
-        <table class="currency-table">
-            <tr>
-                <th>DÖVİZ ADI</th>
-                <th>ALIŞ FİYATI</th>
-                <th>SATIŞ FİYATI</th>
-            </tr>
-            <tr>
-                <td class="currency-code">USD<br><span class="currency-name">DOLAR</span></td>
-                <td class="buy-price" id="usd_buy">35.9400</td>
-                <td class="sell-price" id="usd_sell">36.0250</td>
-            </tr>
-            <tr>
-                <td class="currency-code">EUR<br><span class="currency-name">EURO</span></td>
-                <td class="buy-price" id="eur_buy">39.3780</td>
-                <td class="sell-price" id="eur_sell">39.5700</td>
-            </tr>
-            <tr>
-                <td class="currency-code">GBP<br><span class="currency-name">İNGİLİZ STERLİNİ</span></td>
-                <td class="buy-price">44.1530</td>
-                <td class="sell-price">44.5590</td>
-            </tr>
-            <tr>
-                <td class="currency-code">CHF<br><span class="currency-name">İSVİÇRE FRANGI</span></td>
-                <td class="buy-price">39.2320</td>
-                <td class="sell-price">39.9450</td>
-            </tr>
-            <tr>
-                <td class="currency-code">CAD<br><span class="currency-name">KANADA DOLARI</span></td>
-                <td class="buy-price">24.6940</td>
-                <td class="sell-price">25.4350</td>
-            </tr>
-            <tr>
-                <td class="currency-code">RUB<br><span class="currency-name">RUS RUBLESI</span></td>
-                <td class="buy-price">0.2690</td>
-                <td class="sell-price">0.3580</td>
-            </tr>
-            <tr>
-                <td class="currency-code">AED<br><span class="currency-name">B.A.E. DİRHEMİ</span></td>
-                <td class="buy-price">9.1494</td>
-                <td class="sell-price highlight">9.2494</td>
-            </tr>
-            <tr>
-                <td class="currency-code">AUD<br><span class="currency-name">AVUSTRALYA DOLARI</span></td>
-                <td class="buy-price">22.2780</td>
-                <td class="sell-price">22.9570</td>
-            </tr>
-            <tr>
-                <td class="currency-code">DKK<br><span class="currency-name">DANIMARKA KRONU</span></td>
-                <td class="buy-price">1.0410</td>
-                <td class="sell-price">4.9310</td>
-            </tr>
-            <tr>
-                <td class="currency-code">SEK<br><span class="currency-name">İSVEÇ KRONU</span></td>
-                <td class="buy-price">2.8290</td>
-                <td class="sell-price">2.8490</td>
-            </tr>
-            <tr>
-                <td class="currency-code">NOK<br><span class="currency-name">NORVEÇ KRONU</span></td>
-                <td class="buy-price">2.7550</td>
-                <td class="sell-price">2.7650</td>
-            </tr>
+        <table class="exchange-table">
+            <thead>
+                <tr>
+                    <th>DÖVİZ ADI</th>
+                    <th>ALIŞ FİYATI</th>
+                    <th>SATIŞ FİYATI</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>USD<br><span class="small-text">DOLAR • 03:00:03</span></td>
+                    <td id="usd-buy" class="rate-buy">35.9400</td>
+                    <td id="usd-sell" class="rate-sell">36.0250</td>
+                </tr>
+                <tr>
+                    <td>EUR<br><span class="small-text">EURO • 03:00:03</span></td>
+                    <td id="eur-buy" class="rate-buy">39.3780</td>
+                    <td id="eur-sell" class="rate-sell">39.5700</td>
+                </tr>
+                <tr>
+                    <td>GBP<br><span class="small-text">İNGİLİZ STERLİNİ • 03:00:03</span></td>
+                    <td class="rate-buy">44.1530</td>
+                    <td class="rate-sell">44.5590</td>
+                </tr>
+                <tr>
+                    <td>CHF<br><span class="small-text">İSVİÇRE FRANGI • 03:00:03</span></td>
+                    <td class="rate-buy">39.2320</td>
+                    <td class="rate-sell">39.9450</td>
+                </tr>
+                <tr>
+                    <td>CAD<br><span class="small-text">KANADA DOLARI • 03:00:03</span></td>
+                    <td class="rate-buy">24.6940</td>
+                    <td class="rate-sell">25.4350</td>
+                </tr>
+                <tr>
+                    <td>RUB<br><span class="small-text">RUS RUBLESİ • 01/09/24</span></td>
+                    <td class="rate-buy">0.2690</td>
+                    <td class="rate-sell">0.3580</td>
+                </tr>
+                <tr>
+                    <td>AED<br><span class="small-text">B.A.E. DİRHEMİ • 01/09/24</span></td>
+                    <td class="rate-buy">9.1494</td>
+                    <td class="rate-sell highlight">9.2494</td>
+                </tr>
+                <tr>
+                    <td>AUD<br><span class="small-text">AVUSTRALYA DOLARI • 03:00:03</span></td>
+                    <td class="rate-buy">22.2780</td>
+                    <td class="rate-sell">22.9570</td>
+                </tr>
+                <tr>
+                    <td>DKK<br><span class="small-text">DANİMARKA KRONU • 03:00:03</span></td>
+                    <td class="rate-buy">1.0410</td>
+                    <td class="rate-sell">4.9310</td>
+                </tr>
+                <tr>
+                    <td>SEK<br><span class="small-text">İSVEÇ KRONU • 03:00:03</span></td>
+                    <td class="rate-buy">2.8490</td>
+                    <td class="rate-sell">2.8490</td>
+                </tr>
+            </tbody>
         </table>
-        <div class="footer">
-            <p style="text-align: center; color: #a0b3c6;">canlidoviz.com</p>
-        </div>
     </div>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('current-time').textContent = now.toLocaleTimeString();
+        }
+
+        // Обновляем время каждую секунду
+        setInterval(updateTime, 1000);
+
+        // Инициализация времени при загрузке
+        updateTime();
+
+        // Настроенные курсы для доллара и евро
+        const usdBuyRate = 33.9400 + 2.0000;
+        const usdSellRate = 34.0250 + 2.0000;
+        const eurBuyRate = 37.3780 + 2.0000;
+        const eurSellRate = 37.5700 + 2.0000;
+
+        // Устанавливаем курсы в таблице
+        document.getElementById('usd-buy').textContent = usdBuyRate.toFixed(4);
+        document.getElementById('usd-sell').textContent = usdSellRate.toFixed(4);
+        document.getElementById('eur-buy').textContent = eurBuyRate.toFixed(4);
+        document.getElementById('eur-sell').textContent = eurSellRate.toFixed(4);
+    </script>
 </body>
 </html>
