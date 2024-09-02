@@ -3,81 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Курсы валют</title>
+    <title>Kapalı Çarşı Döviz Kurları</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #202B38;
-            color: #fff;
-            text-align: center;
             margin: 0;
             padding: 0;
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            background-color: #1a2c3b;
+            color: #fff;
+            height: 200vh; /* Увеличиваем высоту страницы */
         }
         .container {
-            max-width: 600px;
-            margin: 50px auto;
             padding: 20px;
-            background-color: #293947;
-            border-radius: 8px;
+            font-size: 16px;
         }
-        h1 {
-            margin-bottom: 20px;
+        .header {
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: bold;
         }
-        .rate {
-            margin: 10px 0;
-            font-size: 1.5em;
+        .sub-header {
+            color: #72b768;
+            text-align: center;
+            margin-bottom: 15px;
         }
-        .currency {
-            display: inline-block;
-            width: 100px;
+        .sub-header span {
+            color: #8fa6b2;
+        }
+        .exchange-table {
+            width: 100%;
+            border-spacing: 0 10px;
+            margin-bottom: 10px;
+        }
+        .exchange-table th, .exchange-table td {
+            padding: 10px;
             text-align: left;
         }
-        .value {
-            display: inline-block;
-            width: 100px;
-            text-align: right;
+        .exchange-table th {
+            font-size: 14px;
+            color: #4cc3c9;
+        }
+        .exchange-table td {
+            font-size: 14px;
+            color: #ffffff;
+        }
+        .rate-buy {
+            font-weight: bold;
+            color: #4cc3c9;
+        }
+        .rate-sell {
+            font-weight: bold;
+        }
+        .highlight {
+            color: #50c878;
+        }
+        .small-text {
+            font-size: 10px;
+            color: #8fa6b2;
+        }
+        .edit-panel {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #2c3e50;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            text-align: left;
+        }
+        .edit-panel input {
+            width: 100%;
+            padding: 5px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            color: #333;
+        }
+        .edit-panel label {
+            font-size: 14px;
+            color: #f0f0f0;
+        }
+        .edit-panel button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #4cc3c9;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .edit-button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #1c2f3b; /* Кнопка похожа на фон, но отличается */
+            color: #72b768;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 50px;
+            height: 50px;
+            display: block;
+            margin: 20px auto;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Курсы валют</h1>
-        <div class="rate">
-            <span class="currency">USD/TRY</span>
-            <span class="value" id="usd-rate">Загрузка...</span>
+        <div class="header">KAPALI ÇARŞI DÖVİZ KURLARI</div>
+        <div class="sub-header">
+            PİYASA: AÇIK <span>• 02/09/2024 •</span> <span id="current-time"></span>
         </div>
-        <div class="rate">
-            <span class="currency">EUR/TRY</span>
-            <span class="value" id="eur-rate">Загрузка...</span>
-        </div>
-        <!-- Вы можете добавить больше валют здесь -->
+        <table class="exchange-table">
+            <thead>
+                <tr>
+                    <th>DÖVİZ ADI</th>
+                    <th>ALIŞ FİYATI</th>
+                    <th>SATIŞ FİYATI</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>USD<br><span class="small-text">DOLAR • 03:00:03</span></td>
+                    <td id="usd-buy" class="rate-buy">35.9400</td>
+                    <td id="usd-sell" class="rate-sell">36.0250</td>
+                </tr>
+                <tr>
+                    <td>EUR<br><span class="small-text">EURO • 03:00:03</span></td>
+                    <td id="eur-buy" class="rate-buy">39.3780</td>
+                    <td id="eur-sell" class="rate-sell">39.5700</td>
+                </tr>
+                <tr>
+                    <td>GBP<br><span class="small-text">İNGİLİZ STERLİNİ • 03:00:03</span></td>
+                    <td id="gbp-buy" class="rate-buy">44.1530</td>
+                    <td id="gbp-sell" class="rate-sell">44.5590</td>
+                </tr>
+                <tr>
+                    <td>CHF<br><span class="small-text">İSVİÇРЕ FRANGI • 03:00:03</span></td>
+                    <td id="chf-buy" class="rate-buy">39.2320</td>
+                    <td id="chf-sell" class="rate-sell">39.9450</td>
+                </tr>
+                <tr>
+                    <td>CAD<br><span class="small-text">KANADA DOLARI • 03:00:03</span></td>
+                    <td id="cad-buy" class="rate-buy">24.6940</td>
+                    <td id="cad-sell" class="rate-sell">25.4350</td>
+                </tr>
+                <tr>
+                    <td>RUB<br><span class="small-text">RUS RUBLESİ • 01/09/24</span></td>
+                    <td id="rub-buy" class="rate-buy">0.2690</td>
+                    <td id="rub-sell" class="rate-sell">0.3580</td>
+                </tr>
+                <tr>
+                    <td>AED<br><span class="small-text">B.A.E. DİRHEMİ • 01/09/24</span></td>
+                    <td id="aed-buy" class="rate-buy">9.1494</td>
+                    <td id="aed-sell" class="rate-sell highlight">9.2494</td>
+                </tr>
+                <tr>
+                    <td>AUD<br><span class="small-text">AVUSTRALYA DOLARI • 03:00:03</span></td>
+                    <td id="aud-buy" class="rate-buy">22.2780</td>
+                    <td id="aud-sell" class="rate-sell">22.9570</td>
+                </tr>
+                <tr>
+                    <td>DKK<br><span class="small-text">DANİMARKА KRONU • 03:00:03</span></td>
+                    <td id="dkk-buy" class="rate-buy">1.0410</td>
+                    <td id="dkk-sell" class="rate-sell">4.9310</td>
+                </tr>
+                <tr>
+                    <td>SEK<br><span class="small-text">İSVEÇ KRONU • 03:00:03</span></td>
+                    <td id="sek-buy" class="rate-buy">2.8490</td>
+                    <td id="sek-sell" class="rate-sell">2.8490</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button class="edit-button" onclick="toggleEditPanel()"></button>
+
+    <div class="edit-panel" id="edit-panel">
+        <label for="usd-buy-input">USD/TRY ALIŞ FİYATI</label>
+        <input type="number" id="usd-buy-input" step="0.0001" value="35.9400">
+
+        <label for="usd-sell-input">USD/TRY SATIŞ FİYATI</label>
+        <input type="number" id="usd-sell-input" step="0.0001" value="36.0250">
+
+        <label for="eur-buy-input">EUR/TRY ALIŞ FİYATI</label>
+        <input type="number" id="eur-buy-input" step="0.0001" value="39.3780">
+
+        <label for="eur-sell-input">EUR/TRY SATIŞ FİYATI</label>
+        <input type="number" id="eur-sell-input" step="0.0001" value="39.5700">
+
+        <!-- Добавьте остальные валюты аналогичным образом -->
+
+        <button onclick="updateRates()">Сохранить изменения</button>
     </div>
 
     <script>
-        const apiKey = 'ВАШ_API_КЛЮЧ'; // Замените на ваш API ключ
-        const apiUrl = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/TRY`;
-
-        async function fetchRates() {
-            try {
-                const response = await fetch(apiUrl);
-                const data = await response.json();
-                
-                // Обновляем курсы на сайте
-                const usdRate = (1 / data.conversion_rates.USD + 2).toFixed(4);
-                const eurRate = (1 / data.conversion_rates.EUR + 2).toFixed(4);
-                
-                document.getElementById('usd-rate').textContent = usdRate;
-                document.getElementById('eur-rate').textContent = eurRate;
-            } catch (error) {
-                console.error('Ошибка получения курсов валют:', error);
-            }
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('current-time').textContent = now.toLocaleTimeString();
         }
 
-        // Обновляем курсы сразу после загрузки страницы
-        fetchRates();
+        // Обновляем время каждую секунду
+        setInterval(updateTime, 1000);
 
-        // Автоматическое обновление каждые 10 минут (600000 миллисекунд)
-        setInterval(fetchRates, 600000);
+        // Инициализация времени при загрузке
+        updateTime();
+
+        function toggleEditPanel() {
+            const panel = document.getElementById('edit-panel');
+            panel.style.display = panel.style.display === 'none' || panel.style.display === '' ? 'block' : 'none';
+        }
+
+        function updateRates() {
+            // Получаем новые значения из полей ввода
+            const usdBuyRate = document.getElementById('usd-buy-input').value;
+            const usdSellRate = document.getElementById('usd-sell-input').value;
+            const eurBuyRate = document.getElementById('eur-buy-input').value;
+            const eurSellRate = document.getElementById('eur-sell-input').value;
+
+            // Обновляем значения на странице
+            document.getElementById('usd-buy').textContent = usdBuyRate;
+            document.getElementById('usd-sell').textContent = usdSellRate;
+            document.getElementById('eur-buy').textContent = eurBuyRate;
+            document.getElementById('eur-sell').textContent = eurSellRate;
+
+            // Скрываем панель редактирования после сохранения
+            toggleEditPanel();
+        }
     </script>
 </body>
 </html>
