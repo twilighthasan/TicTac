@@ -116,7 +116,7 @@
     <div class="container">
         <div class="header">KAPALI ÇARŞI DÖVİZ KURLARI</div>
         <div class="sub-header">
-            PİYASA: AÇIK <span>• 02/09/2024 •</span> <span id="current-time"></span>
+            PİYASA: AÇIK <span id="current-date">• 02/09/2024 •</span> <span id="current-time"></span>
         </div>
         <table class="exchange-table">
             <thead>
@@ -138,7 +138,7 @@
                     <td id="eur-sell" class="rate-sell">39.5700</td>
                 </tr>
                 <tr>
-                    <td>GBP<br><span class="small-text">İNGİLİZ STERLİNİ • 03:00:03</span></td>
+                    <td>GBP<br><span class="small-text">İNGİLİЗ STERLİNİ • 03:00:03</span></td>
                     <td id="gbp-buy" class="rate-buy">44.1530</td>
                     <td id="gbp-sell" class="rate-sell">44.5590</td>
                 </tr>
@@ -173,7 +173,7 @@
                     <td id="dkk-sell" class="rate-sell">4.9310</td>
                 </tr>
                 <tr>
-                    <td>SEK<br><span class="small-text">İSVEÇ KRONU • 03:00:03</span></td>
+                    <td>SEK<br><span class="small-text">İSVEЧ KRONU • 03:00:03</span></td>
                     <td id="sek-buy" class="rate-buy">2.8490</td>
                     <td id="sek-sell" class="rate-sell">2.8490</td>
                 </tr>
@@ -204,13 +204,17 @@
     <script>
         function updateTime() {
             const now = new Date();
-            document.getElementById('current-time').textContent = now.toLocaleTimeString();
+            const date = now.toLocaleDateString();
+            const time = now.toLocaleTimeString();
+
+            document.getElementById('current-date').textContent = `• ${date} •`;
+            document.getElementById('current-time').textContent = time;
         }
 
-        // Обновляем время каждую секунду
+        // Обновляем время и дату каждую секунду
         setInterval(updateTime, 1000);
 
-        // Инициализация времени при загрузке
+        // Инициализация времени и даты при загрузке
         updateTime();
 
         function toggleEditPanel() {
