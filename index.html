@@ -1,243 +1,462 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kapalı Çarşı Döviz Kurları</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: "Helvetica Neue", Arial, sans-serif;
-            background-color: #1a2c3b;
-            color: #fff;
-            height: 200vh; /* Увеличиваем высоту страницы */
-        }
-        .container {
-            padding: 20px;
-            font-size: 16px;
-        }
-        .header {
-            font-size: 20px;
-            text-align: center;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        .sub-header {
-            color: #72b768;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .sub-header span {
-            color: #8fa6b2;
-        }
-        .exchange-table {
-            width: 100%;
-            border-spacing: 0 10px;
-            margin-bottom: 10px;
-        }
-        .exchange-table th, .exchange-table td {
-            padding: 10px;
-            text-align: left;
-        }
-        .exchange-table th {
-            font-size: 14px;
-            color: #4cc3c9;
-        }
-        .exchange-table td {
-            font-size: 14px;
-            color: #ffffff;
-        }
-        .rate-buy {
-            font-weight: bold;
-            color: #4cc3c9;
-        }
-        .rate-sell {
-            font-weight: bold;
-        }
-        .highlight {
-            color: #50c878;
-        }
-        .small-text {
-            font-size: 10px;
-            color: #8fa6b2;
-        }
-        .edit-panel {
-            display: none;
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #2c3e50;
-            border-radius: 10px;
-            width: 100%;
-            max-width: 400px;
-            margin: 20px auto;
-            text-align: left;
-        }
-        .edit-panel input {
-            width: 100%;
-            padding: 5px;
-            margin: 5px 0;
-            border-radius: 5px;
-            border: none;
-            font-size: 16px;
-            color: #333;
-        }
-        .edit-panel label {
-            font-size: 14px;
-            color: #f0f0f0;
-        }
-        .edit-panel button {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #4cc3c9;
-            color: #333;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .edit-button {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #1c2f3b; /* Кнопка похожа на фон, но отличается */
-            color: #72b768;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 50px;
-            height: 50px;
-            display: block;
-            margin: 20px auto;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Базар Deutsch — Разговорник</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Nunito:wght@400;600;700&display=swap');
+
+:root {
+–bg: #0f0f13;
+–card: #1a1a24;
+–card-hover: #22223a;
+–accent: #e8a838;
+–accent2: #d4553a;
+–text: #e8e4df;
+–text2: #9a9590;
+–trans: #7ecbf5;
+–rus: #c4c0bb;
+–cat-bg: #252536;
+–shadow: 0 4px 20px rgba(0,0,0,.4);
+}
+
+- { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+html, body {
+width:100%; height:100%;
+background: var(–bg);
+color: var(–text);
+font-family: ‘Nunito’, sans-serif;
+overflow: hidden;
+touch-action: manipulation;
+}
+
+.app {
+display: flex;
+flex-direction: column;
+height: 100vh;
+height: 100dvh;
+}
+
+/* HEADER */
+.header {
+flex-shrink: 0;
+padding: 12px 16px 8px;
+background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+border-bottom: 2px solid var(–accent);
+text-align: center;
+}
+.header h1 {
+font-family: ‘Playfair Display’, serif;
+font-size: 22px;
+color: var(–accent);
+letter-spacing: 1px;
+}
+.header .sub {
+font-size: 11px;
+color: var(–text2);
+margin-top: 2px;
+}
+
+/* SEARCH */
+.search-wrap {
+flex-shrink: 0;
+padding: 8px 12px;
+background: var(–bg);
+}
+.search-wrap input {
+width: 100%;
+padding: 10px 14px 10px 38px;
+border-radius: 12px;
+border: 1.5px solid #333;
+background: var(–card);
+color: var(–text);
+font-size: 15px;
+font-family: ‘Nunito’, sans-serif;
+outline: none;
+transition: border-color .2s;
+}
+.search-wrap input:focus { border-color: var(–accent); }
+.search-wrap .icon {
+position: absolute;
+left: 24px;
+top: 50%;
+transform: translateY(-50%);
+color: var(–text2);
+font-size: 16px;
+pointer-events: none;
+}
+.search-wrap { position: relative; }
+
+/* CATEGORIES */
+.cats {
+flex-shrink: 0;
+display: flex;
+gap: 6px;
+padding: 4px 12px 8px;
+overflow-x: auto;
+-webkit-overflow-scrolling: touch;
+scrollbar-width: none;
+}
+.cats::-webkit-scrollbar { display:none; }
+.cat-btn {
+flex-shrink: 0;
+padding: 6px 14px;
+border-radius: 20px;
+border: 1.5px solid #333;
+background: var(–card);
+color: var(–text2);
+font-size: 12px;
+font-weight: 600;
+cursor: pointer;
+transition: all .2s;
+white-space: nowrap;
+font-family: ‘Nunito’, sans-serif;
+}
+.cat-btn.active {
+background: var(–accent);
+color: #111;
+border-color: var(–accent);
+}
+
+/* PHRASES LIST */
+.list {
+flex: 1;
+overflow-y: auto;
+-webkit-overflow-scrolling: touch;
+padding: 0 12px 80px;
+}
+
+.phrase {
+background: var(–card);
+border-radius: 14px;
+padding: 12px 14px;
+margin-bottom: 8px;
+border-left: 3px solid var(–accent);
+transition: background .2s;
+position: relative;
+}
+.phrase:active { background: var(–card-hover); }
+
+.phrase .num {
+position: absolute;
+top: 8px;
+right: 12px;
+font-size: 10px;
+color: var(–text2);
+opacity: .5;
+}
+
+.phrase .de {
+font-size: 16px;
+font-weight: 700;
+color: var(–text);
+line-height: 1.3;
+margin-bottom: 4px;
+padding-right: 30px;
+}
+
+.phrase .tr {
+font-size: 14px;
+color: var(–trans);
+line-height: 1.3;
+margin-bottom: 3px;
+font-style: italic;
+}
+
+.phrase .ru {
+font-size: 13px;
+color: var(–rus);
+line-height: 1.3;
+}
+
+.cat-label {
+font-family: ‘Playfair Display’, serif;
+font-size: 15px;
+color: var(–accent);
+padding: 14px 0 6px;
+border-bottom: 1px solid #2a2a3a;
+margin-bottom: 8px;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.count-badge {
+background: var(–accent);
+color: #111;
+font-family: ‘Nunito’, sans-serif;
+font-size: 11px;
+font-weight: 700;
+padding: 1px 8px;
+border-radius: 10px;
+}
+
+.empty {
+text-align: center;
+padding: 40px 20px;
+color: var(–text2);
+font-size: 14px;
+}
+
+/* SCROLL TO TOP */
+.top-btn {
+position: fixed;
+bottom: 20px;
+right: 16px;
+width: 44px;
+height: 44px;
+border-radius: 50%;
+background: var(–accent);
+color: #111;
+border: none;
+font-size: 20px;
+font-weight: 700;
+box-shadow: var(–shadow);
+cursor: pointer;
+display: none;
+align-items: center;
+justify-content: center;
+z-index: 10;
+touch-action: manipulation;
+}
+.top-btn.show { display: flex; }
+</style>
+
 </head>
 <body>
-    <div class="container">
-        <div class="header">KAPALI ÇARŞI DÖVİZ KURLARI</div>
-        <div class="sub-header">
-            PİYASA: AÇIK <span id="current-date">• 02/09/2024 •</span> <span id="current-time"></span>
-        </div>
-        <table class="exchange-table">
-            <thead>
-                <tr>
-                    <th>DÖVİZ ADI</th>
-                    <th>ALIŞ FİYATI</th>
-                    <th>SATIŞ FİYATI</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>USD<br><span class="small-text">DOLAR • 03:00:03</span></td>
-                    <td id="usd-buy" class="rate-buy">36.5400</td>
-                    <td id="usd-sell" class="rate-sell">36.9250</td>
-                </tr>
-                <tr>
-                    <td>EUR<br><span class="small-text">EURO • 03:00:03</span></td>
-                    <td id="eur-buy" class="rate-buy">41.3780</td>
-                    <td id="eur-sell" class="rate-sell">41.9700</td>
-                </tr>
-                <tr>
-                    <td>GBP<br><span class="small-text">İNGİLİЗ STERLİNİ • 03:00:03</span></td>
-                    <td id="gbp-buy" class="rate-buy">44.1530</td>
-                    <td id="gbp-sell" class="rate-sell">44.5590</td>
-                </tr>
-                <tr>
-                    <td>CHF<br><span class="small-text">İSVİÇРЕ FRANGI • 03:00:03</span></td>
-                    <td id="chf-buy" class="rate-buy">39.2320</td>
-                    <td id="chf-sell" class="rate-sell">39.9450</td>
-                </tr>
-                <tr>
-                    <td>CAD<br><span class="small-text">KANADA DOLARI • 03:00:03</span></td>
-                    <td id="cad-buy" class="rate-buy">24.6940</td>
-                    <td id="cad-sell" class="rate-sell">25.4350</td>
-                </tr>
-                <tr>
-                    <td>RUB<br><span class="small-text">RUS RUBLESİ • 01/09/24</span></td>
-                    <td id="rub-buy" class="rate-buy">0.2690</td>
-                    <td id="rub-sell" class="rate-sell">0.3580</td>
-                </tr>
-                <tr>
-                    <td>AED<br><span class="small-text">B.A.E. DİRHEMİ • 01/09/24</span></td>
-                    <td id="aed-buy" class="rate-buy">9.1494</td>
-                    <td id="aed-sell" class="rate-sell highlight">9.2494</td>
-                </tr>
-                <tr>
-                    <td>AUD<br><span class="small-text">AVUSTRALYA DOLARI • 03:00:03</span></td>
-                    <td id="aud-buy" class="rate-buy">22.2780</td>
-                    <td id="aud-sell" class="rate-sell">22.9570</td>
-                </tr>
-                <tr>
-                    <td>DKK<br><span class="small-text">DANİMARKА KRONU • 03:00:03</span></td>
-                    <td id="dkk-buy" class="rate-buy">1.0410</td>
-                    <td id="dkk-sell" class="rate-sell">4.9310</td>
-                </tr>
-                <tr>
-                    <td>SEK<br><span class="small-text">İSVEЧ KRONU • 03:00:03</span></td>
-                    <td id="sek-buy" class="rate-buy">2.8490</td>
-                    <td id="sek-sell" class="rate-sell">2.8490</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<div class="app">
+  <div class="header">
+    <h1>🕌 Bazaar Deutsch</h1>
+    <div class="sub">Разговорник продавца · Немецкий</div>
+  </div>
 
-    <button class="edit-button" onclick="toggleEditPanel()"></button>
+  <div class="search-wrap">
+    <span class="icon">🔍</span>
+    <input type="text" id="search" placeholder="Поиск фразы..." autocomplete="off">
+  </div>
 
-    <div class="edit-panel" id="edit-panel">
-        <label for="usd-buy-input">USD/TRY ALIŞ FİYATI</label>
-        <input type="number" id="usd-buy-input" step="0.0001" value="36.5400">
+  <div class="cats" id="cats"></div>
 
-        <label for="usd-sell-input">USD/TRY SATIŞ FİYATI</label>
-        <input type="number" id="usd-sell-input" step="0.0001" value="36.7250">
+  <div class="list" id="list"></div>
 
-        <label for="eur-buy-input">EUR/TRY ALIŞ FİYATI</label>
-        <input type="number" id="eur-buy-input" step="0.0001" value="39.3780">
+<button class="top-btn" id="topBtn" onclick="scrollTop()">↑</button>
 
-        <label for="eur-sell-input">EUR/TRY SATIŞ FİYATI</label>
-        <input type="number" id="eur-sell-input" step="0.0001" value="39.5700">
+</div>
 
-        <!-- Добавьте остальные валюты аналогичным образом -->
+<script>
+const DATA = [
+  { cat: "👋 Приветствие", phrases: [
+    ["Herzlich willkommen!", "Хэрцлих вилькоммен!", "Добро пожаловать!"],
+    ["Guten Tag!", "Гутен таг!", "Добрый день!"],
+    ["Hallo! Kann ich Ihnen helfen?", "Халло! Кан ихь инен хэльфен?", "Привет! Могу помочь?"],
+    ["Schauen Sie sich gerne um!", "Шауэн зи зихь гэрнэ ум!", "Осмотритесь, пожалуйста!"],
+    ["Willkommen in unserem Geschäft!", "Вилькоммен ин унзэрэм гэшэфт!", "Добро пожаловать в наш магазин!"],
+    ["Schön, dass Sie da sind!", "Шён, дас зи да зинд!", "Рады, что вы здесь!"],
+    ["Kommen Sie herein!", "Коммен зи хэрайн!", "Заходите!"],
+  ]},
+  { cat: "🍬 Сладости", phrases: [
+    ["Möchten Sie probieren?", "Мёхтен зи пробирен?", "Хотите попробовать?"],
+    ["Das ist türkischer Honig — Lokum.", "Дас ист тюркишер хониг — локум.", "Это турецкий мёд — лукум."],
+    ["Alles ist frisch und handgemacht.", "Аллес ист фриш унд хандгэмахт.", "Всё свежее и ручной работы."],
+    ["Wir haben viele Geschmacksrichtungen.", "Вир хабен филе гэшмаксрихтунген.", "У нас много вкусов."],
+    ["Mit Pistazien, Nüssen oder Kokos.", "Мит писта́циен, нюссен одэр ко́кос.", "С фисташками, орехами или кокосом."],
+    ["Das ist Baklava — sehr beliebt!", "Дас ист баклава — зэр бэлибт!", "Это баклава — очень популярна!"],
+    ["Probieren Sie kostenlos!", "Пробирен зи костэнлос!", "Попробуйте бесплатно!"],
+    ["Diese Süßigkeit ist zuckerfrei.", "Дизэ зюсигкайт ист цукэрфрай.", "Эта сладость без сахара."],
+    ["Das ist ein perfektes Geschenk.", "Дас ист айн пэрфэктэс гэшэнк.", "Это идеальный подарок."],
+    ["Die Packung hält zwei Wochen frisch.", "Ди пакунг хэльт цвай вохэн фриш.", "Упаковка сохраняет свежесть 2 недели."],
+    ["Wir packen es schön als Geschenk ein.", "Вир пакэн эс шён альс гэшэнк айн.", "Мы красиво упакуем как подарок."],
+    ["Möchten Sie eine gemischte Box?", "Мёхтен зи айнэ гэмиштэ бокс?", "Хотите ассорти-коробку?"],
+  ]},
+  { cat: "🍵 Чай и кофе", phrases: [
+    ["Möchten Sie einen türkischen Tee?", "Мёхтен зи айнэн тюркишен тэ?", "Хотите турецкий чай?"],
+    ["Wir haben viele Teesorten.", "Вир хабен филе тэзортен.", "У нас много сортов чая."],
+    ["Das ist Granatapfeltee — sehr gesund.", "Дас ист гранатапфэльтэ — зэр гэзунд.", "Это гранатовый чай — очень полезный."],
+    ["Apfeltee ist bei Deutschen sehr beliebt.", "Апфэльтэ ист бай дойчен зэр бэлибт.", "Яблочный чай очень популярен у немцев."],
+    ["Einfach mit heißem Wasser aufgießen.", "Айнфах мит хайсэм вассэр ауфгисен.", "Просто залейте горячей водой."],
+    ["Dieser Tee hilft beim Abnehmen.", "Дизэр тэ хильфт байм абнемэн.", "Этот чай помогает похудеть."],
+    ["Türkischer Kaffee — original gemahlen.", "Тюркишер каффэ — оригиналь гэмален.", "Турецкий кофе — оригинальный помол."],
+    ["Möchten Sie eine Tasse zum Probieren?", "Мёхтен зи айнэ тассэ цум пробирен?", "Хотите чашечку на пробу?"],
+    ["Dieser Tee ist gut für den Magen.", "Дизэр тэ ист гут фюр ден маген.", "Этот чай полезен для желудка."],
+    ["Pulvertee — löst sich sofort auf.", "Пульфэртэ — лёст зихь зофорт ауф.", "Порошковый чай — растворяется сразу."],
+  ]},
+  { cat: "🎁 Сувениры", phrases: [
+    ["Das ist handgemacht.", "Дас ист хандгэмахт.", "Это ручная работа."],
+    ["Ein schönes Andenken aus der Türkei.", "Айн шёнэс андэнкен аус дэр тюркай.", "Красивый сувенир из Турции."],
+    ["Wir haben Kühlschrankmagnete.", "Вир хабен кюльшранкмагнэтэ.", "У нас есть магниты на холодильник."],
+    ["Schauen Sie diese Keramik an!", "Шауэн зи дизэ кэрамик ан!", "Посмотрите эту керамику!"],
+    ["Das Auge schützt vor dem Bösen.", "Дас аугэ шютст фор дэм бёзэн.", "Глаз защищает от злого."],
+    ["Das ist Nazar — ein türkisches Symbol.", "Дас ист назар — айн тюркишэс зюмболь.", "Это назар — турецкий символ."],
+    ["Für Ihre Familie oder Freunde?", "Фюр ирэ фамилиэ одэр фройндэ?", "Для семьи или друзей?"],
+    ["Wir haben kleine und große Größen.", "Вир хабен кляйнэ унд гросэ грёсэн.", "У нас есть маленькие и большие размеры."],
+  ]},
+  { cat: "💍 Украшения", phrases: [
+    ["Das ist Edelstahl — rostet nicht.", "Дас ист эдэльшталь — ростэт нихьт.", "Это нержавеющая сталь — не ржавеет."],
+    ["Echtes Silber, 925er Stempel.", "Эхтэс зильбэр, нойнхундэртфюнфундцванцигер штэмпэль.", "Настоящее серебро, проба 925."],
+    ["Dieses Armband passt zu allem.", "Дизэс армбанд паст цу аллем.", "Этот браслет подходит ко всему."],
+    ["Fußkettchen sind dieses Jahr im Trend.", "Фускэтхен зинд дизэс яр им трэнд.", "Браслеты на ногу в тренде в этом году."],
+    ["Möchten Sie es anprobieren?", "Мёхтен зи эс анпробирен?", "Хотите примерить?"],
+    ["Das verfärbt sich nicht.", "Дас фэрфэрбт зихь нихьт.", "Это не меняет цвет."],
+    ["Wir haben auch Halsketten.", "Вир хабен аух хальскэттэн.", "У нас есть и ожерелья."],
+    ["Drei Stück zum Preis von zwei!", "Драй штюк цум прайс фон цвай!", "Три штуки по цене двух!"],
+    ["Ein tolles Geschenk für eine Frau.", "Айн толлес гэшэнк фюр айнэ фрау.", "Отличный подарок для женщины."],
+    ["Welche Farbe gefällt Ihnen?", "Вэльхэ фарбэ гэфэльт инен?", "Какой цвет вам нравится?"],
+  ]},
+  { cat: "💰 Цена и торг", phrases: [
+    ["Das kostet nur ... Euro.", "Дас костэт нур ... ойро.", "Это стоит всего ... евро."],
+    ["Ich mache Ihnen einen guten Preis.", "Ихь махэ инен айнен гутен прайс.", "Я сделаю вам хорошую цену."],
+    ["Wenn Sie mehr nehmen, wird es billiger.", "Вэн зи мэр нэмэн, вирд эс биллигер.", "Если возьмёте больше, будет дешевле."],
+    ["Das ist schon der beste Preis.", "Дас ист шон дэр бэстэ прайс.", "Это уже лучшая цена."],
+    ["Spezieller Preis nur für Sie!", "Шпэциэллер прайс нур фюр зи!", "Специальная цена только для вас!"],
+    ["Zwei für ... Euro — ein Angebot!", "Цвай фюр ... ойро — айн ангэбот!", "Два за ... евро — предложение!"],
+    ["Das ist sehr gute Qualität.", "Дас ист зэр гутэ квалитэт.", "Это очень хорошее качество."],
+    ["Billiger finden Sie das nirgendwo.", "Биллигер финден зи дас ниргэндво.", "Дешевле вы это нигде не найдёте."],
+    ["Okay, ich gebe Ihnen Rabatt.", "Окей, ихь гэбэ инен рабатт.", "Ладно, я дам вам скидку."],
+    ["Familienpreis — alles zusammen für ...", "Фамилиенпрайс — аллес цузаммен фюр ...", "Семейная цена — всё вместе за ..."],
+  ]},
+  { cat: "💳 Оплата", phrases: [
+    ["Bar oder mit Karte?", "Бар одэр мит картэ?", "Наличные или картой?"],
+    ["Wir akzeptieren Euro und Lira.", "Вир акцэптирен ойро унд лира.", "Мы принимаем евро и лиры."],
+    ["Kreditkarte ist auch okay.", "Крэдиткартэ ист аух окей.", "Кредитная карта тоже подойдёт."],
+    ["Möchten Sie eine Tüte?", "Мёхтен зи айнэ тютэ?", "Хотите пакет?"],
+    ["Hier ist Ihr Wechselgeld.", "Хир ист ир вэксэльгэльд.", "Вот ваша сдача."],
+    ["Brauchen Sie eine Quittung?", "Браухен зи айнэ квиттунг?", "Вам нужен чек?"],
+    ["Dollar nehmen wir auch.", "Доллар нэмэн вир аух.", "Доллары тоже принимаем."],
+  ]},
+  { cat: "📦 Доставка и упаковка", phrases: [
+    ["Soll ich es einpacken?", "Золль ихь эс айнпакэн?", "Завернуть?"],
+    ["Ich packe es sicher für den Koffer.", "Ихь пакэ эс зихэр фюр ден коффэр.", "Я упакую надёжно для чемодана."],
+    ["Das geht gut ins Handgepäck.", "Дас гэт гут инс хандгэпэк.", "Это хорошо поместится в ручную кладь."],
+    ["Wir können es per Post schicken.", "Вир кёнэн эс пэр пост шикэн.", "Мы можем отправить по почте."],
+    ["Keine Sorge, es ist bruchsicher verpackt.", "Кайнэ зоргэ, эс ист брухзихэр фэрпакт.", "Не волнуйтесь, упаковано от ударов."],
+  ]},
+  { cat: "🗣 Общение", phrases: [
+    ["Woher kommen Sie?", "Вохэр коммен зи?", "Откуда вы?"],
+    ["Aus Deutschland? Schön!", "Аус дойчланд? Шён!", "Из Германии? Прекрасно!"],
+    ["Aus Österreich? Willkommen!", "Аус остэрайхь? Вилькоммен!", "Из Австрии? Добро пожаловать!"],
+    ["Aus der Schweiz? Toll!", "Аус дэр швайц? Толль!", "Из Швейцарии? Отлично!"],
+    ["Sind Sie zum ersten Mal in Antalya?", "Зинд зи цум эрстэн маль ин Анталья?", "Вы впервые в Анталье?"],
+    ["Wie heißen Sie?", "Ви хайсэн зи?", "Как вас зовут?"],
+    ["Gefällt Ihnen die Türkei?", "Гэфэльт инен ди тюркай?", "Вам нравится Турция?"],
+    ["Wie lange bleiben Sie?", "Ви лангэ бляйбен зи?", "Как долго вы здесь?"],
+    ["In welchem Hotel wohnen Sie?", "Ин вэльхэм хотэль вонен зи?", "В каком отеле вы живёте?"],
+    ["Genießen Sie Ihren Urlaub!", "Гэнисен зи ирен урлауб!", "Наслаждайтесь отпуском!"],
+  ]},
+  { cat: "🤝 Убеждение", phrases: [
+    ["Sie werden es nicht bereuen!", "Зи вэрден эс нихьт бэройен!", "Вы не пожалеете!"],
+    ["Das kaufen alle Touristen.", "Дас кауфен алле туристэн.", "Это покупают все туристы."],
+    ["Perfekt als Mitbringsel!", "Пэрфэкт альс митбрингзэль!", "Идеально как подарок из поездки!"],
+    ["Ihre Frau wird sich freuen!", "Ирэ фрау вирд зихь фройен!", "Ваша жена будет рада!"],
+    ["Ihr Mann wird sich freuen!", "Ир манн вирд зихь фройен!", "Ваш муж будет рад!"],
+    ["Sie finden das nur hier!", "Зи финден дас нур хир!", "Такое найдёте только здесь!"],
+    ["Nehmen Sie zwei — eins als Geschenk!", "Нэмэн зи цвай — айнс альс гэшэнк!", "Возьмите два — одно как подарок!"],
+    ["Das ist unser Bestseller!", "Дас ист унзэр бэстзэллер!", "Это наш бестселлер!"],
+    ["Greifen Sie zu, solange es da ist!", "Грайфен зи цу, золангэ эс да ист!", "Берите, пока есть!"],
+    ["Letzte Stücke!", "Лецтэ штюкэ!", "Последние штуки!"],
+  ]},
+  { cat: "👋 Прощание", phrases: [
+    ["Vielen Dank für Ihren Einkauf!", "Филен данк фюр ирен айнкауф!", "Большое спасибо за покупку!"],
+    ["Kommen Sie gerne wieder!", "Коммен зи гэрнэ видэр!", "Приходите ещё!"],
+    ["Schönen Tag noch!", "Шёнен таг нох!", "Хорошего дня!"],
+    ["Schönen Urlaub!", "Шёнэн урлауб!", "Хорошего отпуска!"],
+    ["Gute Reise!", "Гутэ райзэ!", "Счастливого пути!"],
+    ["Auf Wiedersehen!", "Ауф видэрзэен!", "До свидания!"],
+    ["Tschüss!", "Чюс!", "Пока!"],
+    ["Sagen Sie Ihren Freunden Bescheid!", "Загэн зи ирен фройнден бэшайд!", "Расскажите друзьям!"],
+    ["Wir sind jeden Tag hier!", "Вир зинд йэден таг хир!", "Мы здесь каждый день!"],
+  ]},
+  { cat: "❓ Полезные фразы", phrases: [
+    ["Einen Moment bitte.", "Айнэн момэнт биттэ.", "Одну минуту, пожалуйста."],
+    ["Ja, natürlich!", "Я, натюрлихь!", "Да, конечно!"],
+    ["Kein Problem!", "Кайн проблем!", "Без проблем!"],
+    ["Leider ist das ausverkauft.", "Ляйдэр ист дас аусфэркауфт.", "К сожалению, это распродано."],
+    ["Ich zeige Ihnen etwas anderes.", "Ихь цайгэ инен этвас андэрэс.", "Я покажу вам кое-что другое."],
+    ["Das ist ganz neu!", "Дас ист ганц ной!", "Это совсем новое!"],
+    ["Ich spreche ein bisschen Deutsch.", "Ихь шпрэхэ айн бисхен дойч.", "Я немного говорю по-немецки."],
+    ["Darf ich Ihnen etwas zeigen?", "Дарф ихь инен этвас цайген?", "Можно вам кое-что показать?"],
+    ["Was suchen Sie?", "Вас зухен зи?", "Что вы ищете?"],
+    ["Für wen ist es — für Sie oder als Geschenk?", "Фюр вэн ист эс — фюр зи одэр альс гэшэнк?", "Для кого — для себя или в подарок?"],
+    ["Kein Druck, schauen Sie in Ruhe!", "Кайн друк, шауэн зи ин руэ!", "Без давления, смотрите спокойно!"],
+    ["Möchten Sie etwas trinken? Tee, Wasser?", "Мёхтен зи этвас тринкен? Тэ, вассэр?", "Хотите что-нибудь выпить? Чай, воду?"],
+    ["Ich helfe Ihnen gerne.", "Ихь хэльфэ инен гэрнэ.", "Я с радостью вам помогу."],
+  ]},
+];
 
-        <button onclick="updateRates()">Сохранить изменения</button>
-    </div>
+let currentCat = "all";
 
-    <script>
-        function updateTime() {
-            const now = new Date();
-            const date = now.toLocaleDateString();
-            const time = now.toLocaleTimeString();
+function init() {
+  const catsEl = document.getElementById('cats');
+  let total = 0;
+  DATA.forEach(c => total += c.phrases.length);
 
-            document.getElementById('current-date').textContent = `• ${date} •`;
-            document.getElementById('current-time').textContent = time;
-        }
+  let html = `<button class="cat-btn active" onclick="setCat('all')">Все (${total})</button>`;
+  DATA.forEach((c, i) => {
+    html += `<button class="cat-btn" onclick="setCat(${i})">${c.cat.split(' ')[0]} ${c.cat.split(' ').slice(1).join(' ')} (${c.phrases.length})</button>`;
+  });
+  catsEl.innerHTML = html;
+  render();
+}
 
-        // Обновляем время и дату каждую секунду
-        setInterval(updateTime, 1000);
+function setCat(c) {
+  currentCat = c;
+  document.querySelectorAll('.cat-btn').forEach((b, i) => {
+    b.classList.toggle('active', (c === 'all' && i === 0) || (c === i - 1));
+  });
+  document.getElementById('search').value = '';
+  render();
+}
 
-        // Инициализация времени и даты при загрузке
-        updateTime();
+function render() {
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  const listEl = document.getElementById('list');
+  let html = '';
+  let num = 0;
 
-        function toggleEditPanel() {
-            const panel = document.getElementById('edit-panel');
-            panel.style.display = panel.style.display === 'none' || panel.style.display === '' ? 'block' : 'none';
-        }
+  const cats = currentCat === 'all' ? DATA : [DATA[currentCat]];
 
-        function updateRates() {
-            // Получаем новые значения из полей ввода
-            const usdBuyRate = document.getElementById('usd-buy-input').value;
-            const usdSellRate = document.getElementById('usd-sell-input').value;
-            const eurBuyRate = document.getElementById('eur-buy-input').value;
-            const eurSellRate = document.getElementById('eur-sell-input').value;
+  cats.forEach(c => {
+    let catPhrases = '';
+    let count = 0;
+    c.phrases.forEach(p => {
+      const match = !q || p[0].toLowerCase().includes(q) || p[1].toLowerCase().includes(q) || p[2].toLowerCase().includes(q);
+      if (!match) return;
+      num++;
+      count++;
+      catPhrases += `<div class="phrase">
+        <div class="num">${num}</div>
+        <div class="de">${p[0]}</div>
+        <div class="tr">${p[1]}</div>
+        <div class="ru">${p[2]}</div>
+      </div>`;
+    });
+    if (count > 0) {
+      html += `<div class="cat-label">${c.cat} <span class="count-badge">${count}</span></div>` + catPhrases;
+    }
+  });
 
-            // Обновляем значения на странице
-            document.getElementById('usd-buy').textContent = usdBuyRate;
-            document.getElementById('usd-sell').textContent = usdSellRate;
-            document.getElementById('eur-buy').textContent = eurBuyRate;
-            document.getElementById('eur-sell').textContent = eurSellRate;
+  if (!html) {
+    html = '<div class="empty">Ничего не найдено 😕</div>';
+  }
 
-            // Скрываем панель редактирования после сохранения
-            toggleEditPanel();
-        }
-    </script>
+  listEl.innerHTML = html;
+  listEl.scrollTop = 0;
+}
+
+document.getElementById('search').addEventListener('input', render);
+
+document.getElementById('list').addEventListener('scroll', function() {
+  document.getElementById('topBtn').classList.toggle('show', this.scrollTop > 300);
+});
+
+function scrollTop() {
+  document.getElementById('list').scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+init();
+</script>
+
 </body>
 </html>
